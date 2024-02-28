@@ -2,26 +2,20 @@ package br.com.rinhaBackend;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import javax.naming.*;
-
-import javax.sql.*;
-import java.sql.*;
-
-public class Main extends HttpServlet {
+public class Main extends ServletBase {
     
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/MyPostgresDB");
-            Connection conn = ds.getConnection();
             Statement stmt = conn.createStatement();
 
             ResultSet rs = stmt.executeQuery("select * from clientes");
